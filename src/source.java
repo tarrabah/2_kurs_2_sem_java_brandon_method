@@ -87,7 +87,7 @@ class program
     }
 
 
-    float coof(float x[], float y[])//22, 22
+    float ryx_k(float x[], float y[])//22, 22
     {
         float sum_x = 0, sum_y = 0, sum_x_y = 0, sum_x_sq = 0, sum_y_sq = 0, r;
 
@@ -115,9 +115,9 @@ class program
                 if (i == j)
                     this.matrix_D[i][j] = 1;
                 else if (i == 3)
-                    this.matrix_D[i][j] = coof(y, x[j]);
+                    this.matrix_D[i][j] = ryx_k(y, x[j]);
                 else
-                    this.matrix_D[i][j] = coof(x[i], x[j]);
+                    this.matrix_D[i][j] = ryx_k(x[i], x[j]);
 
                 this.matrix_D[j][i] = matrix_D[i][j];
             }
@@ -184,7 +184,7 @@ class program
     {
         for (int i = 0; i < 3; i++)
         {
-            math_func result = mnk(this.x[this.ryx_order[i]], this.y_normalized);
+            math_func result = function_selection(this.x[this.ryx_order[i]], this.y_normalized);
             this.result_funcs[i] = result;
 
             for (j = 0; j < 22; j++)
@@ -197,7 +197,7 @@ class program
     }
 
 
-    math_func mnk(float x[], float y[])
+    math_func function_selection(float x[], float y[]) //selects the best function
     {
         float A[] = new float[6];
         float B[] = new float[6];
@@ -266,27 +266,27 @@ class program
         float res[] = new float[2]; //stores function result
 
         //type 1
-        res = coofs_A_B(x, y);
+        res = mnk_linear(x, y);
         A[0] = res[0];
         B[0] = res[1];
         //type 2
-        res = coofs_A_B(x, y_pow_min_one);
+        res = mnk_linear(x, y_pow_min_one);
         A[1] = res[0];
         B[1] = res[1];
         //type 3
-        res = coofs_A_B(x_pow_min_one, y);
+        res = mnk_linear(x_pow_min_one, y);
         A[2] = res[0];
         B[2] = res[1];
         //type 4
-        res = coofs_A_B(x_pow_min_one, y_pow_min_one);
+        res = mnk_linear(x_pow_min_one, y_pow_min_one);
         A[3] = res[0];
         B[3] = (float)Math.exp(res[1]);
         //type 5
-        res = coofs_A_B(x, ln_y);
+        res = mnk_linear(x, ln_y);
         A[4] = res[0];
         B[4] = (float)Math.exp(res[1]);
         //type 6
-        res = coofs_A_B(ln_x, y);
+        res = mnk_linear(ln_x, y);
         A[5] = res[0];
         B[5] = res[1];
 
@@ -324,6 +324,7 @@ class program
         float mn = deviation_sum[0];
         int function_type = 7;
 
+        //чем меньше отклонение тем лучше
         for (int i = 0; i < 6; i++)
         {
             if (deviation_sum[i] <= mn)
@@ -336,7 +337,7 @@ class program
         return new math_func(a[function_type], b[function_type], function_type);
     }
 
-    float[] coofs_A_B(float x[], float y[]) // returns a and b
+    float[] mnk_linear(float x[], float y[]) // returns a and b
     {
         float sum_x = 0, sum_y = 0, sum_x_y = 0, sum_x_sq = 0;
         //подсчёт коофицентов
@@ -353,7 +354,7 @@ class program
         res[0] = (n * sum_x_y - sum_x * sum_y) / (n * sum_x_sq - sum_x * sum_x);
         res[1] = (sum_x_sq * sum_y - sum_x * sum_x_y) / (n * sum_x_sq - sum_x * sum_x);
 
-        return res;
+        return res;//[a, b]
     }
 
     void print_result_table()

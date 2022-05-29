@@ -17,11 +17,11 @@ public class Program {
     private final int[] ryxOrder = {0, 1, 2};
     private final MathFunc[] resultFunctions = new MathFunc[3];
 
-    public List<MathFunc> calculate() {
-        System.out.println("Введите имя файла: ");
-        Scanner scanner = new Scanner(System.in);
-        String file = scanner.nextLine();
-        getData(file);
+    public List<MathFunc> calculateFromFile(String fileName) {
+        //System.out.println("Введите имя файла: ");
+        //Scanner scanner = new Scanner(System.in);
+        //String file = scanner.nextLine();
+        getData(fileName);
         fillMatrixD();
         fillRyx();
         sortRyx();

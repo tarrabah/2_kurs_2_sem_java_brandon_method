@@ -135,11 +135,11 @@ public class Program {
 
     private void functionBuild() {
         for (int i = 0; i < 3; i++) {
-            MathFunc result = functionSelection(this.x[this.ryxOrder[i]], this.yNormalized);
-            this.resultFunctions[i] = result;
+            MathFunc result = functionSelection(this.x[this.ryxOrder[i]], this.yNormalized); //родбор оптимальной зависимости для x[i]
+            this.resultFunctions[i] = result; //сохранение функции-результата
 
             for (int j = 0; j < 22; j++) {
-                this.yNormalized[j] = this.yNormalized[j] / result.calculate(x[this.ryxOrder[i]][j]);
+                this.yNormalized[j] = this.yNormalized[j] / result.calculate(x[this.ryxOrder[i]][j]); //избавляемся от влияния x[i]
             }
         }
 

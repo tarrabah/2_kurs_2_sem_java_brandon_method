@@ -1,15 +1,12 @@
 package src;
 
-import java.io.File;
-import java.io.FileNotFoundException;
 import java.util.List;
-import java.util.Scanner;
 
 public class Program {
     private final int m = 3;
     private final int n = 22;
-    private final float[][] x = new float[3][22];
-    private final float[] y = new float[22];
+    private float[][] x;
+    private float[] y;
     private final float[][] matrixD = new float[4][4];
     private float yAverage = 0;
     private final float[] yNormalized = new float[22];
@@ -17,11 +14,11 @@ public class Program {
     private final int[] ryxOrder = {0, 1, 2};
     private final MathFunc[] resultFunctions = new MathFunc[3];
 
-    public List<MathFunc> calculateFromFile(String fileName) {
-        //System.out.println("Введите имя файла: ");
-        //Scanner scanner = new Scanner(System.in);
-        //String file = scanner.nextLine();
-        getData(fileName);
+    public List<MathFunc> calculate(float[][] x, float[] y) {
+        this.x = x;
+        this.y = y;
+        getYAverage();
+        normalyzeY();
         fillMatrixD();
         fillRyx();
         sortRyx();
@@ -30,33 +27,20 @@ public class Program {
         return List.of(resultFunctions);
     }
 
-    private void getData(String path) {
-        try {
-            File file = new File(String.format("%s", path));
-            Scanner scanner = new Scanner(file);
-            int i = 0;
-            while (scanner.hasNextLine()) {
-                String line = scanner.nextLine();
+    private void getYAverage()
+    {
+        for (int i = 0; i < 22; i++)
+        {
+            this.yAverage += this.y[i];
 
-                String[] splitLine = line.split(" ");
-                this.x[0][i] = Integer.parseInt(splitLine[0]);
-                this.x[1][i] = Integer.parseInt(splitLine[1]);
-                this.x[2][i] = Integer.parseInt(splitLine[2]);
-
-                this.y[i] = Float.parseFloat(splitLine[3]);
-                this.yAverage += this.y[i];
-                i++;
-            }
-
-            scanner.close();
-
-            this.yAverage = this.yAverage / this.n;
-
-            for (i = 0; i < 22; i++)
-                this.yNormalized[i] = this.y[i] / this.yAverage;
-        } catch (FileNotFoundException ex) {
-            throw new RuntimeException("Заданный файл не найден!");
         }
+        this.yAverage = this.yAverage / this.n;
+    }
+
+    private void normalyzeY()
+    {
+        for (int i = 0; i < 22; i++)
+            this.yNormalized[i] = this.y[i] / this.yAverage;
     }
 
     private float ryxK(float[] x, float[] y) { //22, 22

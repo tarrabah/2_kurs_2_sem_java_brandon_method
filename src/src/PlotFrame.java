@@ -6,6 +6,8 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.Scanner;
 import javax.swing.*;
+import javax.swing.table.DefaultTableModel;
+import javax.swing.table.AbstractTableModel;
 
 class PlotFrame extends Frame implements ActionListener
 {
@@ -24,7 +26,6 @@ class PlotFrame extends Frame implements ActionListener
         setTitle("kursach");
         setBounds(100,50,width,height);
         setBackground(Color.GRAY);
-        setLayout(null);
         setLayout(new GridLayout());
 
         addWindowListener(
@@ -95,11 +96,11 @@ class PlotFrame extends Frame implements ActionListener
             }
 
             program.calculate(x,y);
-            //drawResultPlot();
+            drawResultPlot();
         }
     }
 
-    /*
+
     private void drawResultPlot()
     {
         Graphics resultPlot = this.tabWidget.resultPLot.getGraphics();
@@ -109,11 +110,15 @@ class PlotFrame extends Frame implements ActionListener
         for (int i = 0; i < 22; i++)
         {
             xAxis[i] = i;
-            yAxis[i] = i*2;
+            yAxis[i] = i;
         }
         resultPlot.drawPolyline(xAxis, yAxis, 22);
+    }
 
-    }   */
+    private void FillData()
+    {
+
+    }
 }
 
 
@@ -122,23 +127,58 @@ class TabWidget extends JTabbedPane
 {
 
     Panel resultPLot;
+    Panel firstParameterPLot;
+    Panel showDataPanel;
     TabWidget()
     {
         super(JTabbedPane.TOP, JTabbedPane.SCROLL_TAB_LAYOUT);
 
-        Panel data = new Panel();
-        Panel firstParameterPLot = new Panel();
+        showDataPanel = new Panel();
+        showDataPanel.setLayout(new GridLayout());
+        String[] columnNames = {
+                "N",
+                "x1",
+                "x2",
+                "x3",
+                "y_exp",
+                "y_calc"
+        };
+
+        Object[][] data = new Object[22][6];
+
+        for (int i = 0; i < 22; i++)
+        {
+            data[i][0] = i + 1;
+            for (int j = 1; j < 6; j++)
+            {
+                data[i][j] = new String(" ");
+            }
+        }
+
+        //JTable dataTable = new JTable(data, columnNames);
+        //dataTable.setModel(new TableModel());
+        JTable dataTable = new JTable(new TableModel());
+        showDataPanel.add(dataTable);
+        JScrollPane scrollPane = new JScrollPane(dataTable);
+        scrollPane.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_ALWAYS);
+        scrollPane.setBounds(5, 10, 300, 150);
+        scrollPane.setVisible(true);
+        showDataPanel.add(scrollPane);
+
+        firstParameterPLot = new Panel();
         Panel secondParameterPLot = new Panel();
         Panel thirdParameterPLot = new Panel();
         resultPLot = new Panel();
 
         //add panels to tab widget
-        add("data", data);
+        add("data", showDataPanel);
         add("x1", firstParameterPLot);
         add("x2", secondParameterPLot);
         add("x3", thirdParameterPLot);
         add("results", resultPLot);
     }
 }
+
+
 
 

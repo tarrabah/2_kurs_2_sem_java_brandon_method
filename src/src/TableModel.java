@@ -60,4 +60,9 @@ class TableModel extends AbstractTableModel
     public Object getValueAt(int row, int col) {
         return data[row][col].toString();
     }
+
+    public void insertIntoRow(int rowId, Object[] rowData){
+        for (int i = 0; i < this.getRowCount(); i++)
+            data[i][rowId] = rowData[i];
+    }
 }

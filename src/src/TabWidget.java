@@ -41,6 +41,7 @@ class TabWidget extends JTabbedPane
         //dataTable.setModel(new TableModel());
         myTableModel = new TableModel();
         dataTable = new JTable(myTableModel);
+        dataTable.setRowHeight(23);
         showDataPanel.add(dataTable);
         JScrollPane scrollPane = new JScrollPane(dataTable);
         scrollPane.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_ALWAYS);

@@ -8,6 +8,7 @@ import java.util.Scanner;
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.AbstractTableModel;
+import javax.swing.table.JTableHeader;
 
 class PlotFrame extends Frame implements ActionListener
 {
@@ -18,8 +19,8 @@ class PlotFrame extends Frame implements ActionListener
     private TabWidget tabWidget;
 
     private String filePath;
-
     private Program program;
+
     PlotFrame(int height, int width)
     {
         // Заголовок окна:
@@ -67,16 +68,17 @@ class PlotFrame extends Frame implements ActionListener
     {
         FileDialog fd = new FileDialog(this, "Choose a file", FileDialog.LOAD);
         fd.setVisible(true);
-        String path = fd.getFile();
+        String path = fd.getDirectory() + fd.getFile();
         if (path != null)
         {
-
+            System.out.println(path);
             float[][] x = new float[3][22];
             float[] y = new float[22];
 
             try {
-                File file = new File(String.format("%s", path));
+                File file = new File(String.format("/%s", path));
                 Scanner scanner = new Scanner(file);
+                System.out.println("file opened");
                 int i = 0;
                 while (scanner.hasNextLine()) {
                     String line = scanner.nextLine();
@@ -95,7 +97,10 @@ class PlotFrame extends Frame implements ActionListener
                 throw new RuntimeException("Заданный файл не найден!");
             }
 
-            program.calculate(x,y);
+            regressionResFunc res = program.calculate(x,y);
+            this.tabWidget.myTableModel.insertIntoRow(5, generateResults(res, x));
+            this.tabWidget.dataTable.repaint();
+
             drawResultPlot();
         }
     }
@@ -115,12 +120,17 @@ class PlotFrame extends Frame implements ActionListener
         resultPlot.drawPolyline(xAxis, yAxis, 22);
     }
 
-    private void FillData()
+    private Object[] generateResults(regressionResFunc func, float[][] x)
     {
+        Object[] result = new Float[22];
+        for (int i = 0; i < 22; i++){
+            result[i] = func.calculate(x[0][i], x[1][i], x[2][i]);
+        }
+
+        return result;
 
     }
 }
-
 
 
 class TabWidget extends JTabbedPane
@@ -129,6 +139,8 @@ class TabWidget extends JTabbedPane
     Panel resultPLot;
     Panel firstParameterPLot;
     Panel showDataPanel;
+    TableModel myTableModel;
+    JTable dataTable;
     TabWidget()
     {
         super(JTabbedPane.TOP, JTabbedPane.SCROLL_TAB_LAYOUT);
@@ -157,7 +169,8 @@ class TabWidget extends JTabbedPane
 
         //JTable dataTable = new JTable(data, columnNames);
         //dataTable.setModel(new TableModel());
-        JTable dataTable = new JTable(new TableModel());
+        myTableModel = new TableModel();
+        dataTable = new JTable(myTableModel);
         showDataPanel.add(dataTable);
         JScrollPane scrollPane = new JScrollPane(dataTable);
         scrollPane.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_ALWAYS);

@@ -65,4 +65,11 @@ class TableModel extends AbstractTableModel
         for (int i = 0; i < this.getRowCount(); i++)
             data[i][rowId] = rowData[i];
     }
+
+    @Override
+    public void setValueAt(Object aValue, int rowIndex, int columnIndex) {
+        if (this.isCellEditable(rowIndex, columnIndex)) {
+            this.data[rowIndex][columnIndex] = aValue;
+        }
+    }
 }

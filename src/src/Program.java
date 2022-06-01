@@ -14,7 +14,7 @@ public class Program {
     private final int[] ryxOrder = {0, 1, 2};
     private final MathFunc[] resultFunctions = new MathFunc[3];
 
-    public List<MathFunc> calculate(float[][] x, float[] y) {
+    public regressionResFunc calculate(float[][] x, float[] y) {
         this.x = x;
         this.y = y;
         getYAverage();
@@ -24,7 +24,7 @@ public class Program {
         sortRyx();
         functionBuild();
         printResultTable();
-        return List.of(resultFunctions);
+        return new regressionResFunc(yAverage, resultFunctions[0], resultFunctions[1], resultFunctions[2]);
     }
 
     private void getYAverage()

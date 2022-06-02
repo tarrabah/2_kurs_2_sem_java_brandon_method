@@ -1,14 +1,15 @@
 package src;
 
+import org.jfree.chart.JFreeChart;
+import org.jfree.data.xy.XYSeries;
+import org.jfree.data.xy.XYSeriesCollection;
+
 import java.awt.*;
 import java.awt.event.*;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.Scanner;
-import javax.swing.*;
-import javax.swing.table.DefaultTableModel;
-import javax.swing.table.AbstractTableModel;
-import javax.swing.table.JTableHeader;
+
 
 class PlotFrame extends Frame implements ActionListener
 {
@@ -20,6 +21,8 @@ class PlotFrame extends Frame implements ActionListener
 
     private String filePath;
     private Program program;
+
+    private int kompKey = 1;
 
     PlotFrame(int height, int width)
     {
@@ -96,11 +99,30 @@ class PlotFrame extends Frame implements ActionListener
             this.tabWidget.showDataPanel.myTableModel.insertIntoRow(2, x[2]);
             this.tabWidget.showDataPanel.myTableModel.insertIntoRow(3, x[2]);
             this.tabWidget.showDataPanel.myTableModel.insertIntoRow(4, y);
+
             regressionResFunc res = program.calculate(x,y);
-            this.tabWidget.showDataPanel.myTableModel.insertIntoRow(5, generateResults(res, x));
+
+            Float[] yRes = (Float[]) generateResults(res, x);
+            this.tabWidget.showDataPanel.myTableModel.insertIntoRow(5, yRes);
             this.tabWidget.showDataPanel.dataTable.repaint();
 
-            drawResultPlot();
+            Float[] yX1 = new Float[22];
+            Float[] yX2 = new Float[22];
+            Float[] yX3 = new Float[22];
+            Float[] count = new Float[22];
+
+            for (i = 0; i < 22; i++) {
+                yX1[i] = res.getFunc1().calculate(x[0][i]);
+                yX2[i] = res.getFunc2().calculate(x[1][i]);
+                yX3[i] = res.getFunc3().calculate(x[2][i]);
+                count[i] = new Float(i);
+            }
+
+            drawPlot(tabWidget.x1Dataset, x[0], yX1);
+            drawPlot(tabWidget.x2Dataset, x[1], yX2);
+            drawPlot(tabWidget.x3Dataset, x[2], yX3);
+            drawPlot(tabWidget.resultDataset, count, yRes);
+            drawPlot(tabWidget.resultDataset, count, y);
 
         }
         catch (FileNotFoundException ex) {
@@ -110,18 +132,15 @@ class PlotFrame extends Frame implements ActionListener
     }
 
 
-    private void drawResultPlot()
+    private void drawPlot(XYSeriesCollection dataset, Float[] x, Float[] y)
     {
-        Graphics resultPlot = this.tabWidget.resultPLot.getGraphics();
-        resultPlot.setColor(Color.RED);
-        int[] xAxis = new int[22];
-        int[] yAxis = new int[22];
+        XYSeries data = new XYSeries(kompKey);
+        kompKey ++;
         for (int i = 0; i < 22; i++)
         {
-            xAxis[i] = i;
-            yAxis[i] = i;
+            data.add(x[i], y[i]);
         }
-        resultPlot.drawPolyline(xAxis, yAxis, 22);
+        dataset.addSeries(data);
     }
 
     private Object[] generateResults(regressionResFunc func, Float[][] x)

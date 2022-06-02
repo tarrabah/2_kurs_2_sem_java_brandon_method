@@ -20,4 +20,16 @@ public class regressionResFunc {
     public String toString() {
         return this.yAverage + "*" + func1.toString() + "*" + func2.toString() + "*" + func3.toString();
     }
+
+    public MathFunc getFunc1(){
+        return func1;
+    }
+
+    public MathFunc getFunc2(){
+        return func2;
+    }
+
+    public MathFunc getFunc3(){
+        return func3;
+    }
 }

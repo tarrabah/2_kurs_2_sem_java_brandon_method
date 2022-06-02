@@ -61,4 +61,11 @@ class TabWidget extends JTabbedPane
         add("x3", thirdParameterPLot);
         add("results", resultPLot);
     }
+
+    public void clearCharts(){
+        x1Dataset.removeAllSeries();
+        x2Dataset.removeAllSeries();
+        x3Dataset.removeAllSeries();
+        resultDataset.removeAllSeries();
+    }
 }

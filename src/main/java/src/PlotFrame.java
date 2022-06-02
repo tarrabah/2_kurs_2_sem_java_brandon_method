@@ -118,6 +118,9 @@ class PlotFrame extends Frame implements ActionListener
                 count[i] = new Float(i);
             }
 
+            tabWidget.clearCharts();
+            kompKey = 1;
+
             drawPlot(tabWidget.x1Dataset, x[0], yX1);
             drawPlot(tabWidget.x2Dataset, x[1], yX2);
             drawPlot(tabWidget.x3Dataset, x[2], yX3);

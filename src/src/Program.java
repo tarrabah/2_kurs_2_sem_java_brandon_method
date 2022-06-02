@@ -5,16 +5,16 @@ import java.util.List;
 public class Program {
     private final int m = 3;
     private final int n = 22;
-    private float[][] x;
-    private float[] y;
+    private Float[][] x;
+    private Float[] y;
     private final float[][] matrixD = new float[4][4];
     private float yAverage = 0;
-    private final float[] yNormalized = new float[22];
+    private final Float[] yNormalized = new Float[22];
     private final float[] rYx = new float[3];
     private final int[] ryxOrder = {0, 1, 2};
     private final MathFunc[] resultFunctions = new MathFunc[3];
 
-    public regressionResFunc calculate(float[][] x, float[] y) {
+    public regressionResFunc calculate(Float[][] x, Float[] y) {
         this.x = x;
         this.y = y;
         getYAverage();
@@ -43,7 +43,7 @@ public class Program {
             this.yNormalized[i] = this.y[i] / this.yAverage;
     }
 
-    private float ryxK(float[] x, float[] y) { //22, 22
+    private float ryxK(Float[] x, Float[] y) { //22, 22
         float sumX = 0;
         float sumY = 0;
         float sumXY = 0;
@@ -130,7 +130,7 @@ public class Program {
         //string function_as_string = "y = " + to_string(y_average);
     }
 
-    private MathFunc functionSelection(float[] x, float[] y) { //selects the best function
+    private MathFunc functionSelection(Float[] x, Float[] y) { //selects the best function
         float[] A = new float[6];
         float[] B = new float[6];
         float[] a = new float[6];
@@ -164,10 +164,10 @@ public class Program {
 	    */
 
         // подготовка массивов ввода по условиям выше
-        float[] yPowMinOne = new float[22];
-        float[] xPowMinOne = new float[22];
-        float[] lnX = new float[22];
-        float[] lnY = new float[22];
+        Float[] yPowMinOne = new Float[22];
+        Float[] xPowMinOne = new Float[22];
+        Float[] lnX = new Float[22];
+        Float[] lnY = new Float[22];
 
 
         for (int i = 0; i < 22; i++) {
@@ -247,7 +247,7 @@ public class Program {
         return new MathFunc(a[functionType], b[functionType], functionType);
     }
 
-    private float[] mnkLinear(float[] x, float[] y) { // returns a and b
+    private float[] mnkLinear(Float[] x, Float[] y) { // returns a and b
         float sumX = 0;
         float sumY = 0;
         float sumXY = 0;

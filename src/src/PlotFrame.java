@@ -69,40 +69,44 @@ class PlotFrame extends Frame implements ActionListener
         FileDialog fd = new FileDialog(this, "Choose a file", FileDialog.LOAD);
         fd.setVisible(true);
         String path = fd.getDirectory() + fd.getFile();
-        if (path != null)
-        {
-            System.out.println(path);
-            float[][] x = new float[3][22];
-            float[] y = new float[22];
 
-            try {
-                File file = new File(String.format("/%s", path));
-                Scanner scanner = new Scanner(file);
-                System.out.println("file opened");
-                int i = 0;
-                while (scanner.hasNextLine()) {
-                    String line = scanner.nextLine();
+        System.out.println(path);
+        Float[][] x = new Float[3][22];
+        Float[] y = new Float[22];
 
-                    String[] splitLine = line.split(" ");
-                    x[0][i] = Integer.parseInt(splitLine[0]);
-                    x[1][i] = Integer.parseInt(splitLine[1]);
-                    x[2][i] = Integer.parseInt(splitLine[2]);
+        try {
+            File file = new File(String.format("/%s", path));
+            Scanner scanner = new Scanner(file);
+            System.out.println("file opened");
+            int i = 0;
+            while (scanner.hasNextLine()) {
+                String line = scanner.nextLine();
 
-                    y[i] = Float.parseFloat(splitLine[3]);
-                    i++;
-                }
-                scanner.close();
+                String[] splitLine = line.split(" ");
+                x[0][i] = Float.parseFloat(splitLine[0]);
+                x[1][i] = Float.parseFloat(splitLine[1]);
+                x[2][i] = Float.parseFloat(splitLine[2]);
 
-            } catch (FileNotFoundException ex) {
-                throw new RuntimeException("Заданный файл не найден!");
+                y[i] = Float.parseFloat(splitLine[3]);
+                i++;
             }
+            scanner.close();
 
+            this.tabWidget.showDataPanel.myTableModel.insertIntoRow(1, x[0]);
+            this.tabWidget.showDataPanel.myTableModel.insertIntoRow(2, x[2]);
+            this.tabWidget.showDataPanel.myTableModel.insertIntoRow(3, x[2]);
+            this.tabWidget.showDataPanel.myTableModel.insertIntoRow(4, y);
             regressionResFunc res = program.calculate(x,y);
-            this.tabWidget.myTableModel.insertIntoRow(5, generateResults(res, x));
-            this.tabWidget.dataTable.repaint();
+            this.tabWidget.showDataPanel.myTableModel.insertIntoRow(5, generateResults(res, x));
+            this.tabWidget.showDataPanel.dataTable.repaint();
 
             drawResultPlot();
+
         }
+        catch (FileNotFoundException ex) {
+            throw new RuntimeException("Заданный файл не найден!");
+        }
+
     }
 
 
@@ -120,7 +124,7 @@ class PlotFrame extends Frame implements ActionListener
         resultPlot.drawPolyline(xAxis, yAxis, 22);
     }
 
-    private Object[] generateResults(regressionResFunc func, float[][] x)
+    private Object[] generateResults(regressionResFunc func, Float[][] x)
     {
         Object[] result = new Float[22];
         for (int i = 0; i < 22; i++){

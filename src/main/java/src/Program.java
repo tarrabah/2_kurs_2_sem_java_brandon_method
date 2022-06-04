@@ -1,22 +1,25 @@
 package src;
 
-import java.util.List;
-
 public class Program {
     private final int m = 3;
     private final int n = 22;
     private Float[][] x;
     private Float[] y;
-    private final float[][] matrixD = new float[4][4];
+    private float[][] matrixD = new float[4][4];
     private float yAverage = 0;
-    private final Float[] yNormalized = new Float[22];
-    private final float[] rYx = new float[3];
+    private Float[] yNormalized = new Float[22];
+    private  float[] rYx = new float[3];
     private final int[] ryxOrder = {0, 1, 2};
-    private final MathFunc[] resultFunctions = new MathFunc[3];
+    private MathFunc[] resultFunctions = new MathFunc[3];
 
-    public regressionResFunc calculate(Float[][] x, Float[] y) {
+    ResultsContainer results;
+
+    public ResultsContainer calculate(Float[][] x, Float[] y) {
         this.x = x;
         this.y = y;
+
+        results = new ResultsContainer();
+
         getYAverage();
         normalyzeY();
         fillMatrixD();
@@ -24,7 +27,8 @@ public class Program {
         sortRyx();
         functionBuild();
         //printResultTable();
-        return new regressionResFunc(yAverage, resultFunctions[0], resultFunctions[1], resultFunctions[2]);
+        results.ResultFunction = new RegressionResFunc(yAverage, resultFunctions[0], resultFunctions[1], resultFunctions[2]);
+        return results;
     }
 
     private void getYAverage()
@@ -32,7 +36,6 @@ public class Program {
         for (int i = 0; i < 22; i++)
         {
             this.yAverage += this.y[i];
-
         }
         this.yAverage = this.yAverage / this.n;
     }
@@ -119,7 +122,7 @@ public class Program {
 
     private void functionBuild() {
         for (int i = 0; i < 3; i++) {
-            MathFunc result = functionSelection(this.x[this.ryxOrder[i]], this.yNormalized); //родбор оптимальной зависимости для x[i]
+            MathFunc result = functionSelection(this.x[this.ryxOrder[i]], this.yNormalized, i); //подбор оптимальной зависимости для x[i]
             this.resultFunctions[i] = result; //сохранение функции-результата
 
             for (int j = 0; j < 22; j++) {
@@ -130,7 +133,7 @@ public class Program {
         //string function_as_string = "y = " + to_string(y_average);
     }
 
-    private MathFunc functionSelection(Float[] x, Float[] y) { //selects the best function
+    private MathFunc functionSelection(Float[] x, Float[] y, int functionIndex) { //selects the best function
         float[] A = new float[6];
         float[] B = new float[6];
         float[] a = new float[6];
@@ -192,7 +195,7 @@ public class Program {
         A[2] = res[0];
         B[2] = res[1];
         //type 4
-        res = mnkLinear(xPowMinOne, yPowMinOne);
+        res = mnkLinear(lnX, lnY);
         A[3] = res[0];
         B[3] = (float) Math.exp(res[1]);
         //type 5
@@ -244,6 +247,13 @@ public class Program {
                 mn = deviationSum[i];
             }
         }
+        results.optimalFuncIndex[functionIndex] = functionType;
+        //запихиваем все функции в контейнер для резульатов
+        for (int i = 0; i < 6; i++)
+        {
+            results.functions[functionIndex][i] = new MathFunc(a[i], b[i], i);
+        }
+
         return new MathFunc(a[functionType], b[functionType], functionType);
     }
 

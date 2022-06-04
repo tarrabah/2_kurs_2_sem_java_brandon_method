@@ -6,6 +6,8 @@ import org.jfree.chart.ChartFactory;
 import org.jfree.chart.ChartPanel;
 import org.jfree.chart.JFreeChart;
 import org.jfree.chart.plot.PlotOrientation;
+import org.jfree.chart.plot.XYPlot;
+import org.jfree.chart.renderer.xy.XYLineAndShapeRenderer;
 import org.jfree.data.xy.XYSeriesCollection;
 
 class TabWidget extends JTabbedPane
@@ -15,11 +17,11 @@ class TabWidget extends JTabbedPane
     ChartPanel firstParameterPLot;
     ChartPanel secondParameterPLot;
     ChartPanel thirdParameterPLot;
-    ShowDataPanel showDataPanel;
+    ExperimentalDataPanel showDataPanel;
 
-    ShowXnResultsPanel x1Results;
-    ShowXnResultsPanel x2Results;
-    ShowXnResultsPanel x3Results;
+    XnResultsPanel x1Results;
+    XnResultsPanel x2Results;
+    XnResultsPanel x3Results;
 
     JFreeChart chartX1;
     JFreeChart chartX2;
@@ -29,39 +31,42 @@ class TabWidget extends JTabbedPane
     XYSeriesCollection x2Dataset;
     XYSeriesCollection x3Dataset;
     XYSeriesCollection resultDataset;
+
+    XYLineAndShapeRenderer resultPlotRenderer;
+    XYPlot resultPlotGotPlot;
+
     TabWidget()
     {
         super(JTabbedPane.TOP, JTabbedPane.SCROLL_TAB_LAYOUT);
         //TODO https://stackoverflow.com/questions/5290812/jfreechart-scatter-plot-lines
-        showDataPanel = new ShowDataPanel();
+        showDataPanel = new ExperimentalDataPanel();
         //first chart
         x1Dataset = new XYSeriesCollection();
         chartX1 = ChartFactory.createXYLineChart("y(x1))",
-                "x1", "y(x1)", x1Dataset, PlotOrientation.VERTICAL, false, false, false);
+                "x1", "y(x1)", x1Dataset, PlotOrientation.VERTICAL, true, false, false);
         firstParameterPLot = new ChartPanel(chartX1);
 
         x2Dataset = new XYSeriesCollection();
         chartX2 = ChartFactory.createXYLineChart("y(x2))",
-                "x2", "y(x2)", x2Dataset, PlotOrientation.VERTICAL, false, false, false);
+                "x2", "y(x2)", x2Dataset, PlotOrientation.VERTICAL, true, false, false);
         secondParameterPLot = new ChartPanel(chartX2);
 
         x3Dataset = new XYSeriesCollection();
         chartX3 = ChartFactory.createXYLineChart("y(x3))",
-                "x3", "y(x3)", x3Dataset, PlotOrientation.VERTICAL, false, false, false);
+                "x3", "y(x3)", x3Dataset, PlotOrientation.VERTICAL, true, false, false);
         thirdParameterPLot = new ChartPanel(chartX3);
 
         resultDataset = new XYSeriesCollection();
         chartResult = ChartFactory.createScatterPlot("y(n)",
-                "n", "y(n)", resultDataset, PlotOrientation.VERTICAL, false, false, false);
+                "n", "y(n)", resultDataset, PlotOrientation.VERTICAL, true, false, false);
         resultPLot = new ChartPanel(chartResult);
-        //secondParameterPLot = new ChartPanel();
-        //thirdParameterPLot = new ChartPanel();
-        //resultPLot = new ChartPanel();
 
+        resultPlotGotPlot = (XYPlot) chartResult.getPlot();
+        resultPlotRenderer = new XYLineAndShapeRenderer();
 
-        x1Results = new ShowXnResultsPanel();
-        x2Results = new ShowXnResultsPanel();
-        x3Results = new ShowXnResultsPanel();
+        x1Results = new XnResultsPanel();
+        x2Results = new XnResultsPanel();
+        x3Results = new XnResultsPanel();
 
         //add panels to tab widget
         add("data", showDataPanel);

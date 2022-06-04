@@ -2,7 +2,7 @@ package src;
 
 import javax.swing.table.AbstractTableModel;
 
-public class ShowXnResultsTableModel extends AbstractTableModel {
+public class XnResultsTableModel extends AbstractTableModel {
     final private String[] columnNames = {
             "x",
             "y1",
@@ -14,13 +14,24 @@ public class ShowXnResultsTableModel extends AbstractTableModel {
     };
 
     //TODO change data to ""
-    Object[][] data = new String[22][7];
+    Object[][] data;
+
+    XnResultsTableModel() {
+        super();
+        data = new Object[22][7];
+        for (int i = 0; i < 22; i++)
+        {
+            for (int j = 0; j < 7; j++)
+            {
+                data[i][j] = " ";
+            }
+        }
+    }
 
     @Override
     public boolean isCellEditable(int row, int column) {
         return column != 0;
     }
-
 
     public int getColumnCount() {
         return columnNames.length;
@@ -39,8 +50,9 @@ public class ShowXnResultsTableModel extends AbstractTableModel {
     }
 
     public void insertIntoRow(int rowId, Object[] rowData){
-        for (int i = 0; i < this.getRowCount(); i++)
+        for (int i = 0; i < this.getRowCount(); i++){
             data[i][rowId] = rowData[i];
+        }
     }
 
     @Override

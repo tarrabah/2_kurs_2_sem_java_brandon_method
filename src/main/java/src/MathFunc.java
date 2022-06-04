@@ -22,6 +22,11 @@ public class MathFunc {
         };
     }
 
+
+    public int getType(){
+        return type;
+    }
+
     @Override
     public String toString() {
         return switch (type) {

@@ -3,15 +3,18 @@ package src;
 import javax.swing.*;
 import java.awt.*;
 
-public class ShowXnResultsPanel extends Panel{
-    ShowXnResultsTableModel myTableModel = new ShowXnResultsTableModel();
+class ExperimentalDataPanel extends Panel
+{
     JTable dataTable;
 
-    ShowXnResultsPanel() {
+    ExperimentDataTableModel myTableModel;
+
+
+    ExperimentalDataPanel() {
         super();
         setLayout(new GridLayout());
 
-        myTableModel = new ShowXnResultsTableModel();
+        myTableModel = new ExperimentDataTableModel();
         dataTable = new JTable(myTableModel);
         dataTable.setRowHeight(23);
         add(dataTable);

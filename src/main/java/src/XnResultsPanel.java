@@ -3,19 +3,16 @@ package src;
 import javax.swing.*;
 import java.awt.*;
 
-class ShowDataPanel extends Panel
-{
+public class XnResultsPanel extends Panel{
+    XnResultsTableModel TableModel = new XnResultsTableModel();
     JTable dataTable;
 
-    TableModel myTableModel;
-
-
-    ShowDataPanel() {
+    XnResultsPanel() {
         super();
         setLayout(new GridLayout());
 
-        myTableModel = new TableModel();
-        dataTable = new JTable(myTableModel);
+        TableModel = new XnResultsTableModel();
+        dataTable = new JTable(TableModel);
         dataTable.setRowHeight(23);
         add(dataTable);
         JScrollPane scrollPane = new JScrollPane(dataTable);

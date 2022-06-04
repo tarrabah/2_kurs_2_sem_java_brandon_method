@@ -1,12 +1,12 @@
 package src;
 
-public class regressionResFunc {
+public class RegressionResFunc {
     private final MathFunc func1;
     private final MathFunc func2;
     private final MathFunc func3;
     private final float yAverage;
 
-    public regressionResFunc(float yAverage, MathFunc func1, MathFunc func2, MathFunc func3) {
+    public RegressionResFunc(float yAverage, MathFunc func1, MathFunc func2, MathFunc func3) {
         this.yAverage = yAverage;
         this.func1 = func1;
         this.func2 = func2;

@@ -2,7 +2,7 @@ package src;
 
 import javax.swing.table.AbstractTableModel;
 
-class TableModel extends AbstractTableModel
+class ExperimentDataTableModel extends AbstractTableModel
 {
 
     final private String[] columnNames = {

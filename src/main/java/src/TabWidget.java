@@ -17,6 +17,10 @@ class TabWidget extends JTabbedPane
     ChartPanel thirdParameterPLot;
     ShowDataPanel showDataPanel;
 
+    ShowXnResultsPanel x1Results;
+    ShowXnResultsPanel x2Results;
+    ShowXnResultsPanel x3Results;
+
     JFreeChart chartX1;
     JFreeChart chartX2;
     JFreeChart chartX3;
@@ -28,7 +32,7 @@ class TabWidget extends JTabbedPane
     TabWidget()
     {
         super(JTabbedPane.TOP, JTabbedPane.SCROLL_TAB_LAYOUT);
-
+        //TODO https://stackoverflow.com/questions/5290812/jfreechart-scatter-plot-lines
         showDataPanel = new ShowDataPanel();
         //first chart
         x1Dataset = new XYSeriesCollection();
@@ -54,11 +58,19 @@ class TabWidget extends JTabbedPane
         //thirdParameterPLot = new ChartPanel();
         //resultPLot = new ChartPanel();
 
+
+        x1Results = new ShowXnResultsPanel();
+        x2Results = new ShowXnResultsPanel();
+        x3Results = new ShowXnResultsPanel();
+
         //add panels to tab widget
         add("data", showDataPanel);
         add("x1", firstParameterPLot);
+        add("x1 table", x1Results);
         add("x2", secondParameterPLot);
+        add("x2 table", x2Results);
         add("x3", thirdParameterPLot);
+        add("x3 table", x3Results);
         add("results", resultPLot);
     }
 

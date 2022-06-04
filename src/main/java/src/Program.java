@@ -23,7 +23,7 @@ public class Program {
         fillRyx();
         sortRyx();
         functionBuild();
-        printResultTable();
+        //printResultTable();
         return new regressionResFunc(yAverage, resultFunctions[0], resultFunctions[1], resultFunctions[2]);
     }
 

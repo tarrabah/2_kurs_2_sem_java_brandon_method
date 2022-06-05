@@ -119,7 +119,7 @@ class MainFrame extends Frame implements ActionListener
             drawXnPlots(tabWidget.x2Dataset, x[1], resContainer, 1);
             drawXnPlots(tabWidget.x3Dataset, x[2], resContainer, 2);
 
-            drawPlot(tabWidget.resultDataset, count, yRes, "regression");
+            drawPlot(tabWidget.resultDataset, count, yRes, regressionRes.toString());
             drawPlot(tabWidget.resultDataset, count, y, "experiment");
             tabWidget.resultPlotRenderer.setSeriesLinesVisible(0, true);
             tabWidget.resultPlotRenderer.setSeriesLinesVisible(1, false);
@@ -159,7 +159,7 @@ class MainFrame extends Frame implements ActionListener
         int optimalFunctionType = res.optimalFuncIndex[functionN];
 
         for (int i = 0; i < 6; i++){
-            String kompKey = "x" + (i + 1);
+            String kompKey = "y" + (i + 1) + " = " + res.functions[functionN][i].toString();
 
             if (i == optimalFunctionType)
                 kompKey = kompKey + " Optimal";

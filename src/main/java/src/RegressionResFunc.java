@@ -18,7 +18,7 @@ public class RegressionResFunc {
     }
 
     public String toString() {
-        return this.yAverage + "*" + func1.toString() + "*" + func2.toString() + "*" + func3.toString();
+        return this.yAverage + "*" + func1.toString() + "*\n" + func2.toString() + "*" + func3.toString();
     }
 
     public MathFunc getFunc1(){

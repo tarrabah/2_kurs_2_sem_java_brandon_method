@@ -6,6 +6,7 @@ public class XnResultsTableModel extends AbstractTableModel {
     private int lineNumber;
     final private String[] columnNames = {
             "x",
+            "y_exp",
             "y1",
             "y2",
             "y3",
@@ -14,16 +15,15 @@ public class XnResultsTableModel extends AbstractTableModel {
             "y6"
     };
 
-    //TODO change data to ""
     Object[][] data;
 
     XnResultsTableModel(int lineNumber) {
         super();
         this.lineNumber = lineNumber;
-        data = new Object[this.lineNumber][7];
+        data = new Object[this.lineNumber][columnNames.length];
         for (int i = 0; i < this.lineNumber; i++)
         {
-            for (int j = 0; j < 7; j++)
+            for (int j = 0; j < columnNames.length; j++)
             {
                 data[i][j] = " ";
             }

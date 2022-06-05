@@ -143,7 +143,11 @@ public class Program {
         float[] B = new float[6];
         float[] a = new float[6];
         float[] b = new float[6];
-        this.results.yXn[functionIndex] = y;
+        System.arraycopy(y, 0, this.results.yXn[functionIndex], 0, y.length);
+        System.out.println("=====================");
+        for(int i = 0; i < 22; i++){
+            System.out.println(y[i]);
+        }
         float[] deviationSum = new float[6]; // набор из 6 пар a b, описанных ниже некоторые надо преодразовать в соответствии с уравнениями ниже
 	    /*
 	    все уравнения приводятся к виду линейному виду: Y = A * X + B
@@ -236,12 +240,12 @@ public class Program {
 
         //подсчёт сумм модулей (нужны квадраты) отклонений
         for (int i = 0; i < lineNumber; i++) {
-            deviationSum[0] += Math.abs(y[i] - (a[0] * x[i] + b[0]));
-            deviationSum[1] += Math.abs(y[i] - 1 / (a[1] * x[i] + b[1]));
-            deviationSum[2] += Math.abs(y[i] - (a[2] / x[i] + b[2]));
-            deviationSum[3] += Math.abs(y[i] - (Math.pow(x[i], a[3]) * b[3]));
-            deviationSum[4] += Math.abs(y[i] - (Math.exp(a[4] * x[i]) * b[4]));
-            deviationSum[5] += Math.abs(y[i] - (a[5] * Math.log(x[i]) + b[5]));
+            deviationSum[0] += Math.pow((y[i] - (a[0] * x[i] + b[0])), 2);
+            deviationSum[1] += Math.pow((y[i] - 1 / (a[1] * x[i] + b[1])), 2);
+            deviationSum[2] += Math.pow((y[i] - (a[2] / x[i] + b[2])), 2);
+            deviationSum[3] += Math.pow((y[i] - (Math.pow(x[i], a[3]) * b[3])), 2);
+            deviationSum[4] += Math.pow((y[i] - (Math.exp(a[4] * x[i]) * b[4])), 2);
+            deviationSum[5] += Math.pow((y[i] - (a[5] * Math.log(x[i]) + b[5])), 2);
         }
 
         float mn = deviationSum[0];

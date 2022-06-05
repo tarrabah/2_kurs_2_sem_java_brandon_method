@@ -94,7 +94,7 @@ class MainFrame extends Frame implements ActionListener
             }
 
             scanner.close();
-
+            //fills tables
             this.tabWidget.showDataPanel.myTableModel.insertIntoRow(1, x[0]);
             this.tabWidget.showDataPanel.myTableModel.insertIntoRow(2, x[1]);
             this.tabWidget.showDataPanel.myTableModel.insertIntoRow(3, x[2]);
@@ -102,7 +102,6 @@ class MainFrame extends Frame implements ActionListener
 
             ResultsContainer resContainer = program.calculate(x,y);
             RegressionResFunc regressionRes = resContainer.ResultFunction;
-
 
             Float[] yRes = (Float[]) generateResults(x, regressionRes);
             this.tabWidget.showDataPanel.myTableModel.insertIntoRow(5, yRes);
@@ -117,6 +116,7 @@ class MainFrame extends Frame implements ActionListener
             tabWidget.clearCharts();
             kompKey = 1;
 
+            //draws plots for x[i]
             drawXnPlots(tabWidget.x1Dataset, x[0], resContainer, 0);
             drawXnPlots(tabWidget.x2Dataset, x[1], resContainer, 1);
             drawXnPlots(tabWidget.x3Dataset, x[2], resContainer, 2);
@@ -125,6 +125,7 @@ class MainFrame extends Frame implements ActionListener
             drawPlot(tabWidget.resultDataset, count, yRes, regressionRes.toString());
             drawPlot(tabWidget.resultDataset, count, y, "experiment");
 
+            //sets lines for data series
             tabWidget.resultPlotRenderer.setSeriesLinesVisible(0, true);
             tabWidget.resultPlotRenderer.setSeriesLinesVisible(1, false);
             tabWidget.resultPlotGotPlot.setRenderer(tabWidget.resultPlotRenderer);
@@ -133,7 +134,7 @@ class MainFrame extends Frame implements ActionListener
             tabWidget.x2Results.TableModel.insertIntoRow(0, x[1]);
             tabWidget.x3Results.TableModel.insertIntoRow(0, x[2]);
 
-            for (i = 0; i < 6; i++)
+            for (i = 0; i < 6; i++)//fills data to xn tables
             {
                 tabWidget.x1Results.TableModel.insertIntoRow(i + 1, functionResSequence(x[0], resContainer.functions[0][i]));
                 tabWidget.x2Results.TableModel.insertIntoRow(i + 1, functionResSequence(x[1], resContainer.functions[1][i]));
@@ -163,17 +164,16 @@ class MainFrame extends Frame implements ActionListener
         int optimalFunctionType = res.optimalFuncIndex[functionN];
 
         for (int i = 0; i < 6; i++){
-            String kompKey = "y" + (i + 1) + " = " + res.functions[functionN][i].toString();
+            String kompKey = "y" + (i + 1) + " = " + res.functions[functionN][i].toString();//label
 
             if (i == optimalFunctionType)
                 kompKey = kompKey + " Optimal";
-
 
             drawPlot(dataset, x, functionResSequence(x, res.functions[functionN][i]), kompKey);
         }
     }
 
-    private Object[] generateResults(Float[][] x, RegressionResFunc func)
+    private Object[] generateResults(Float[][] x, RegressionResFunc func) //returns array of function vals
     {
         Object[] result = new Float[lineNumber];
         for (int i = 0; i < lineNumber; i++){
@@ -183,9 +183,8 @@ class MainFrame extends Frame implements ActionListener
         return result;
     }
 
-    private Float[] functionResSequence(Float[] x, MathFunc func)
+    private Float[] functionResSequence(Float[] x, MathFunc func)//almost the same as generateResults, but for MathFunc
     {
-
         Float[] res = new Float[lineNumber];
 
         for (int i = 0; i < lineNumber; i ++){

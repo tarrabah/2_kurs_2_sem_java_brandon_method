@@ -134,11 +134,16 @@ class MainFrame extends Frame implements ActionListener
             tabWidget.x2Results.TableModel.insertIntoRow(0, x[1]);
             tabWidget.x3Results.TableModel.insertIntoRow(0, x[2]);
 
-            for (i = 0; i < 6; i++)//fills data to xn tables
+
+            tabWidget.x1Results.TableModel.insertIntoRow(1, resContainer.yXn[0]);
+            tabWidget.x2Results.TableModel.insertIntoRow(1, resContainer.yXn[1]);
+            tabWidget.x3Results.TableModel.insertIntoRow(1, resContainer.yXn[2]);
+
+            for (i = 2; i < 8; i++)//fills data to xn tables
             {
-                tabWidget.x1Results.TableModel.insertIntoRow(i + 1, functionResSequence(x[0], resContainer.functions[0][i]));
-                tabWidget.x2Results.TableModel.insertIntoRow(i + 1, functionResSequence(x[1], resContainer.functions[1][i]));
-                tabWidget.x3Results.TableModel.insertIntoRow(i + 1, functionResSequence(x[2], resContainer.functions[2][i]));
+                tabWidget.x1Results.TableModel.insertIntoRow(i, functionResSequence(x[0], resContainer.functions[0][i - 2]));
+                tabWidget.x2Results.TableModel.insertIntoRow(i, functionResSequence(x[1], resContainer.functions[1][i - 2]));
+                tabWidget.x3Results.TableModel.insertIntoRow(i, functionResSequence(x[2], resContainer.functions[2][i - 2]));
             }
 
         }

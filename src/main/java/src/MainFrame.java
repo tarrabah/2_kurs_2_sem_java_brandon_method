@@ -12,6 +12,7 @@ import java.util.Scanner;
 
 class MainFrame extends Frame implements ActionListener
 {
+    private int lineNumber = 22; // количество строк
     // Конструктор (аргументы - высота и ширина окна);
     private Menu fileMenu;
     private MenuBar mainMenuBar;
@@ -56,13 +57,13 @@ class MainFrame extends Frame implements ActionListener
 
         setMenuBar(mainMenuBar);//sets menu bar for window
 
-        tabWidget = new TabWidget();
+        tabWidget = new TabWidget(lineNumber);
 
         add(tabWidget);
         setResizable(false);
         setVisible(true);   //Отображение окна
 
-        program = new Program();
+        program = new Program(lineNumber);
     }
 
     public void actionPerformed(ActionEvent e)
@@ -72,8 +73,8 @@ class MainFrame extends Frame implements ActionListener
         String path = fd.getDirectory() + fd.getFile();
 
         //System.out.println(path);
-        Float[][] x = new Float[3][22];
-        Float[] y = new Float[22];
+        Float[][] x = new Float[3][lineNumber];
+        Float[] y = new Float[lineNumber];
 
         try {
             File file = new File(String.format("/%s", path));
@@ -91,6 +92,7 @@ class MainFrame extends Frame implements ActionListener
                 y[i] = Float.parseFloat(splitLine[3]);
                 i++;
             }
+
             scanner.close();
 
             this.tabWidget.showDataPanel.myTableModel.insertIntoRow(1, x[0]);
@@ -106,9 +108,9 @@ class MainFrame extends Frame implements ActionListener
             this.tabWidget.showDataPanel.myTableModel.insertIntoRow(5, yRes);
             this.tabWidget.showDataPanel.dataTable.repaint();
 
-            Float[] count = new Float[22];
+            Float[] count = new Float[lineNumber];
 
-            for (i = 0; i < 22; i++) {
+            for (i = 0; i < lineNumber; i++) {
                 count[i] = new Float(i);
             }
 
@@ -119,8 +121,10 @@ class MainFrame extends Frame implements ActionListener
             drawXnPlots(tabWidget.x2Dataset, x[1], resContainer, 1);
             drawXnPlots(tabWidget.x3Dataset, x[2], resContainer, 2);
 
+
             drawPlot(tabWidget.resultDataset, count, yRes, regressionRes.toString());
             drawPlot(tabWidget.resultDataset, count, y, "experiment");
+
             tabWidget.resultPlotRenderer.setSeriesLinesVisible(0, true);
             tabWidget.resultPlotRenderer.setSeriesLinesVisible(1, false);
             tabWidget.resultPlotGotPlot.setRenderer(tabWidget.resultPlotRenderer);
@@ -146,7 +150,7 @@ class MainFrame extends Frame implements ActionListener
     private void drawPlot(XYSeriesCollection dataset, Float[] x, Float[] y, String kompKey)
     {
         XYSeries data = new XYSeries(kompKey);
-        for (int i = 0; i < 22; i++)
+        for (int i = 0; i < lineNumber; i++)
         {
             data.add(x[i], y[i]);
         }
@@ -171,8 +175,8 @@ class MainFrame extends Frame implements ActionListener
 
     private Object[] generateResults(Float[][] x, RegressionResFunc func)
     {
-        Object[] result = new Float[22];
-        for (int i = 0; i < 22; i++){
+        Object[] result = new Float[lineNumber];
+        for (int i = 0; i < lineNumber; i++){
             result[i] = func.calculate(x[0][i], x[1][i], x[2][i]);
         }
 
@@ -182,9 +186,9 @@ class MainFrame extends Frame implements ActionListener
     private Float[] functionResSequence(Float[] x, MathFunc func)
     {
 
-        Float[] res = new Float[22];
+        Float[] res = new Float[lineNumber];
 
-        for (int i = 0; i < 22; i ++){
+        for (int i = 0; i < lineNumber; i ++){
             res[i] = func.calculate(x[i]);
 
         }

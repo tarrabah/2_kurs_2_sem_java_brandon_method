@@ -2,23 +2,28 @@ package src;
 
 public class Program {
     private final int m = 3;
-    private final int n = 22;
+    private final int lineNumber;
     private Float[][] x;
     private Float[] y;
     private float[][] matrixD = new float[4][4];
     private float yAverage = 0;
-    private Float[] yNormalized = new Float[22];
+    private Float[] yNormalized;
     private  float[] rYx = new float[3];
     private final int[] ryxOrder = {0, 1, 2};
     private MathFunc[] resultFunctions = new MathFunc[3];
 
     ResultsContainer results;
 
+    Program(int lineNumber){
+        this.lineNumber = lineNumber;
+        yNormalized = new Float[lineNumber];
+    }
+
     public ResultsContainer calculate(Float[][] x, Float[] y) {
         this.x = x;
         this.y = y;
 
-        results = new ResultsContainer();
+        results = new ResultsContainer(lineNumber);
 
         getYAverage();
         normalyzeY();
@@ -33,16 +38,16 @@ public class Program {
 
     private void getYAverage()
     {
-        for (int i = 0; i < 22; i++)
+        for (int i = 0; i < lineNumber; i++)
         {
             this.yAverage += this.y[i];
         }
-        this.yAverage = this.yAverage / this.n;
+        this.yAverage = this.yAverage / this.lineNumber;
     }
 
     private void normalyzeY()
     {
-        for (int i = 0; i < 22; i++)
+        for (int i = 0; i < lineNumber; i++)
             this.yNormalized[i] = this.y[i] / this.yAverage;
     }
 
@@ -53,14 +58,14 @@ public class Program {
         float sumXSq = 0;
         float sumYSq = 0;
 
-        for (int i = 0; i < 22; i++) {
+        for (int i = 0; i < lineNumber; i++) {
             sumX += x[i];
             sumY += y[i];
             sumXY += x[i] * y[i];
             sumXSq += x[i] * x[i];
             sumYSq += y[i] * y[i];
         }
-        return (n * sumXY - sumX * sumY) / (float) Math.sqrt((n * sumXSq - sumX * sumX) * (n * sumYSq - sumY * sumY));
+        return (lineNumber * sumXY - sumX * sumY) / (float) Math.sqrt((lineNumber * sumXSq - sumX * sumX) * (lineNumber * sumYSq - sumY * sumY));
     }
 
     // заполнение матрицы matrix_D
@@ -125,7 +130,7 @@ public class Program {
             MathFunc result = functionSelection(this.x[this.ryxOrder[i]], this.yNormalized, i); //подбор оптимальной зависимости для x[i]
             this.resultFunctions[i] = result; //сохранение функции-результата
 
-            for (int j = 0; j < 22; j++) {
+            for (int j = 0; j < lineNumber; j++) {
                 this.yNormalized[j] = this.yNormalized[j] / result.calculate(x[this.ryxOrder[i]][j]); //избавляемся от влияния x[i]
             }
         }
@@ -138,6 +143,7 @@ public class Program {
         float[] B = new float[6];
         float[] a = new float[6];
         float[] b = new float[6];
+        this.results.yXn[functionIndex] = y;
         float[] deviationSum = new float[6]; // набор из 6 пар a b, описанных ниже некоторые надо преодразовать в соответствии с уравнениями ниже
 	    /*
 	    все уравнения приводятся к виду линейному виду: Y = A * X + B
@@ -152,28 +158,29 @@ public class Program {
 		    y = a/x + b
 		    X = 1/x
 	    function type 4.
-		    y = b * x^a => ln y = ln b + a * ln x
+		    y = b * x ^ a => ln y = a * ln x + ln b
 		    Y = ln y
 		    B = ln b => b = e^B
 		    A = a
-		    x = ln x
+		    X = ln x
 	    function type 5.
-		    y = b * e ^( a * x ) => ln y = ln b + a * x
+		    y = b * e ^ ( a * x ) => ln y = a * x + ln b
 		    Y = ln y
 		    B = ln b => b = e^B
 	    function type 6.
 		    y = a * ln x + b
 		    X = ln x
+		    Y = y
 	    */
 
         // подготовка массивов ввода по условиям выше
-        Float[] yPowMinOne = new Float[22];
-        Float[] xPowMinOne = new Float[22];
-        Float[] lnX = new Float[22];
-        Float[] lnY = new Float[22];
+        Float[] yPowMinOne = new Float[lineNumber];
+        Float[] xPowMinOne = new Float[lineNumber];
+        Float[] lnX = new Float[lineNumber];
+        Float[] lnY = new Float[lineNumber];
 
 
-        for (int i = 0; i < 22; i++) {
+        for (int i = 0; i < lineNumber; i++) {
             yPowMinOne[i] = 1 / y[i];
             xPowMinOne[i] = 1 / x[i];
             lnX[i] = (float) Math.log(x[i]);
@@ -228,7 +235,7 @@ public class Program {
         b[5] = B[5];
 
         //подсчёт сумм модулей (нужны квадраты) отклонений
-        for (int i = 0; i < 22; i++) {
+        for (int i = 0; i < lineNumber; i++) {
             deviationSum[0] += Math.abs(y[i] - (a[0] * x[i] + b[0]));
             deviationSum[1] += Math.abs(y[i] - 1 / (a[1] * x[i] + b[1]));
             deviationSum[2] += Math.abs(y[i] - (a[2] / x[i] + b[2]));
@@ -272,14 +279,14 @@ public class Program {
 
         //вычисление и фактический возврат
         float[] res = new float[2];
-        res[0] = (n * sumXY - sumX * sumY) / (n * sumXSq - sumX * sumX);
-        res[1] = (sumXSq * sumY - sumX * sumXY) / (n * sumXSq - sumX * sumX);
+        res[0] = (lineNumber * sumXY - sumX * sumY) / (lineNumber * sumXSq - sumX * sumX);
+        res[1] = (sumXSq * sumY - sumX * sumXY) / (lineNumber * sumXSq - sumX * sumX);
 
         return res;//[a, b]
     }
 
     private void printResultTable() {
-        for (int i = 0; i < 22; i++) {
+        for (int i = 0; i < lineNumber; i++) {
             float yRegression = (yAverage * resultFunctions[0].calculate(x[ryxOrder[0]][i]) *
                     resultFunctions[1].calculate(x[ryxOrder[1]][i]) *
                     resultFunctions[2].calculate(x[ryxOrder[2]][i]));

@@ -10,11 +10,11 @@ class ExperimentalDataPanel extends Panel
     ExperimentDataTableModel myTableModel;
 
 
-    ExperimentalDataPanel() {
+    ExperimentalDataPanel(int lineNumber) {
         super();
         setLayout(new GridLayout());
 
-        myTableModel = new ExperimentDataTableModel();
+        myTableModel = new ExperimentDataTableModel(lineNumber);
         dataTable = new JTable(myTableModel);
         dataTable.setRowHeight(23);
         add(dataTable);

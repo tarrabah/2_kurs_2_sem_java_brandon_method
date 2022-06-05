@@ -14,30 +14,21 @@ class ExperimentDataTableModel extends AbstractTableModel
             "y_calc"
     };
 
-    final Object[][] data = {
-            {1, "", "", "", "", ""},
-            {2, "", "", "", "", ""},
-            {3, "", "", "", "", ""},
-            {4, "", "", "", "", ""},
-            {5, "", "", "", "", ""},
-            {6, "", "", "", "", ""},
-            {7, "", "", "", "", ""},
-            {8, "", "", "", "", ""},
-            {9, "", "", "", "", ""},
-            {10, "", "", "", "", ""},
-            {11, "", "", "", "", ""},
-            {12, "", "", "", "", ""},
-            {13, "", "", "", "", ""},
-            {14, "", "", "", "", ""},
-            {15, "", "", "", "", ""},
-            {16, "", "", "", "", ""},
-            {17, "", "", "", "", ""},
-            {18, "", "", "", "", ""},
-            {19, "", "", "", "", ""},
-            {20, "", "", "", "", ""},
-            {21, "", "", "", "", ""},
-            {22, "", "", "", "", ""}
-    };
+    final Object[][] data;
+
+    ExperimentDataTableModel(int lineNumber)
+    {
+        super();
+
+        data = new Object[lineNumber][6];
+
+        for (int i = 0; i < lineNumber; i++){
+            data[i][0] = i + 1;
+            for (int j = 1; j < 6; j++){
+                data[i][j] = " ";
+            }
+        }
+    }
 
     @Override
     public boolean isCellEditable(int row, int column) {

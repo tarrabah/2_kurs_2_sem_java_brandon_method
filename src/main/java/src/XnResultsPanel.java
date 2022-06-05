@@ -4,14 +4,14 @@ import javax.swing.*;
 import java.awt.*;
 
 public class XnResultsPanel extends Panel{
-    XnResultsTableModel TableModel = new XnResultsTableModel();
+    XnResultsTableModel TableModel;
     JTable dataTable;
 
-    XnResultsPanel() {
+    XnResultsPanel(int lineNumber) {
         super();
         setLayout(new GridLayout());
 
-        TableModel = new XnResultsTableModel();
+        TableModel = new XnResultsTableModel(lineNumber);
         dataTable = new JTable(TableModel);
         dataTable.setRowHeight(23);
         add(dataTable);

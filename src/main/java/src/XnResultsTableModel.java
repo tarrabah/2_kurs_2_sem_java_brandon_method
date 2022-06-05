@@ -3,6 +3,7 @@ package src;
 import javax.swing.table.AbstractTableModel;
 
 public class XnResultsTableModel extends AbstractTableModel {
+    private int lineNumber;
     final private String[] columnNames = {
             "x",
             "y1",
@@ -16,10 +17,11 @@ public class XnResultsTableModel extends AbstractTableModel {
     //TODO change data to ""
     Object[][] data;
 
-    XnResultsTableModel() {
+    XnResultsTableModel(int lineNumber) {
         super();
-        data = new Object[22][7];
-        for (int i = 0; i < 22; i++)
+        this.lineNumber = lineNumber;
+        data = new Object[this.lineNumber][7];
+        for (int i = 0; i < this.lineNumber; i++)
         {
             for (int j = 0; j < 7; j++)
             {

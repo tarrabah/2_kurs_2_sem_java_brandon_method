@@ -35,11 +35,10 @@ class TabWidget extends JTabbedPane
     XYLineAndShapeRenderer resultPlotRenderer;
     XYPlot resultPlotGotPlot;
 
-    TabWidget()
+    TabWidget(int lineNumber)
     {
         super(JTabbedPane.TOP, JTabbedPane.SCROLL_TAB_LAYOUT);
-        //TODO https://stackoverflow.com/questions/5290812/jfreechart-scatter-plot-lines
-        showDataPanel = new ExperimentalDataPanel();
+        showDataPanel = new ExperimentalDataPanel(lineNumber);
         //first chart
         x1Dataset = new XYSeriesCollection();
         chartX1 = ChartFactory.createXYLineChart("y(x1))",
@@ -64,9 +63,9 @@ class TabWidget extends JTabbedPane
         resultPlotGotPlot = (XYPlot) chartResult.getPlot();
         resultPlotRenderer = new XYLineAndShapeRenderer();
 
-        x1Results = new XnResultsPanel();
-        x2Results = new XnResultsPanel();
-        x3Results = new XnResultsPanel();
+        x1Results = new XnResultsPanel(lineNumber);
+        x2Results = new XnResultsPanel(lineNumber);
+        x3Results = new XnResultsPanel(lineNumber);
 
         //add panels to tab widget
         add("data", showDataPanel);

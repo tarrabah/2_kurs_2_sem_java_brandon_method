@@ -10,8 +10,7 @@ import java.io.FileNotFoundException;
 import java.util.Scanner;
 
 
-class MainFrame extends Frame implements ActionListener
-{
+class MainFrame extends Frame implements ActionListener {
     private int lineNumber = 22; // количество строк
     // Конструктор (аргументы - высота и ширина окна);
     private Menu fileMenu;
@@ -23,19 +22,16 @@ class MainFrame extends Frame implements ActionListener
 
     private int kompKey = 1;
 
-    MainFrame(int height, int width)
-    {
+    MainFrame(int height, int width) {
         // Заголовок окна:
         setTitle("kursach");
-        setBounds(100,50,width,height);
+        setBounds(100, 50, width, height);
         setBackground(Color.GRAY);
         setLayout(new GridLayout());
 
         addWindowListener(
-                new WindowAdapter()
-                {
-                    public void windowClosing(WindowEvent ve)
-                    {
+                new WindowAdapter() {
+                    public void windowClosing(WindowEvent ve) {
                         System.exit(0);
                     }
                 }
@@ -66,8 +62,7 @@ class MainFrame extends Frame implements ActionListener
         program = new Program(lineNumber);
     }
 
-    public void actionPerformed(ActionEvent e)
-    {
+    public void actionPerformed(ActionEvent e) {
         FileDialog fd = new FileDialog(this, "Choose a file", FileDialog.LOAD);
         fd.setVisible(true);
         String path = fd.getDirectory() + fd.getFile();
@@ -100,7 +95,7 @@ class MainFrame extends Frame implements ActionListener
             this.tabWidget.showDataPanel.myTableModel.insertIntoRow(3, x[2]);
             this.tabWidget.showDataPanel.myTableModel.insertIntoRow(4, y);
 
-            ResultsContainer resContainer = program.calculate(x,y);
+            ResultsContainer resContainer = program.calculate(x, y);
             RegressionResFunc regressionRes = resContainer.ResultFunction;
 
             Float[] yRes = (Float[]) generateResults(x, regressionRes);
@@ -146,18 +141,15 @@ class MainFrame extends Frame implements ActionListener
                 tabWidget.x3Results.TableModel.insertIntoRow(i, functionResSequence(x[2], resContainer.functions[2][i - 2]));
             }
 
-        }
-        catch (FileNotFoundException ex) {
+        } catch (FileNotFoundException ex) {
             throw new RuntimeException("Заданный файл не найден!");
         }
 
     }
 
-    private void drawPlot(XYSeriesCollection dataset, Float[] x, Float[] y, String kompKey)
-    {
+    private void drawPlot(XYSeriesCollection dataset, Float[] x, Float[] y, String kompKey) {
         XYSeries data = new XYSeries(kompKey);
-        for (int i = 0; i < lineNumber; i++)
-        {
+        for (int i = 0; i < lineNumber; i++) {
             data.add(x[i], y[i]);
         }
         dataset.addSeries(data);
@@ -168,7 +160,7 @@ class MainFrame extends Frame implements ActionListener
     {
         int optimalFunctionType = res.optimalFuncIndex[functionN];
 
-        for (int i = 0; i < 6; i++){
+        for (int i = 0; i < 6; i++) {
             String kompKey = "y" + (i + 1) + " = " + res.functions[functionN][i].toString();//label
 
             if (i == optimalFunctionType)
@@ -181,7 +173,7 @@ class MainFrame extends Frame implements ActionListener
     private Object[] generateResults(Float[][] x, RegressionResFunc func) //returns array of function vals
     {
         Object[] result = new Float[lineNumber];
-        for (int i = 0; i < lineNumber; i++){
+        for (int i = 0; i < lineNumber; i++) {
             result[i] = func.calculate(x[0][i], x[1][i], x[2][i]);
         }
 
@@ -192,7 +184,7 @@ class MainFrame extends Frame implements ActionListener
     {
         Float[] res = new Float[lineNumber];
 
-        for (int i = 0; i < lineNumber; i ++){
+        for (int i = 0; i < lineNumber; i++) {
             res[i] = func.calculate(x[i]);
 
         }

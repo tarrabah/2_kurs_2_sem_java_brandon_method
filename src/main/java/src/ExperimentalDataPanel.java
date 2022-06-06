@@ -3,8 +3,7 @@ package src;
 import javax.swing.*;
 import java.awt.*;
 
-class ExperimentalDataPanel extends Panel
-{
+class ExperimentalDataPanel extends Panel {
     JTable dataTable;
 
     ExperimentDataTableModel myTableModel;

@@ -8,13 +8,13 @@ public class Program {
     private float[][] matrixD = new float[4][4];
     private float yAverage = 0;
     private Float[] yNormalized;
-    private  float[] rYx = new float[3];
+    private float[] rYx = new float[3];
     private final int[] ryxOrder = {0, 1, 2};
     private MathFunc[] resultFunctions = new MathFunc[3];
 
     ResultsContainer results;
 
-    Program(int lineNumber){
+    Program(int lineNumber) {
         this.lineNumber = lineNumber;
         yNormalized = new Float[lineNumber];
     }
@@ -36,17 +36,14 @@ public class Program {
         return results;
     }
 
-    private void getYAverage()
-    {
-        for (int i = 0; i < lineNumber; i++)
-        {
+    private void getYAverage() {
+        for (int i = 0; i < lineNumber; i++) {
             this.yAverage += this.y[i];
         }
         this.yAverage = this.yAverage / this.lineNumber;
     }
 
-    private void normalyzeY()
-    {
+    private void normalyzeY() {
         for (int i = 0; i < lineNumber; i++)
             this.yNormalized[i] = this.y[i] / this.yAverage;
     }
@@ -145,7 +142,7 @@ public class Program {
         float[] b = new float[6];
         System.arraycopy(y, 0, this.results.yXn[functionIndex], 0, y.length);
         System.out.println("=====================");
-        for(int i = 0; i < 22; i++){
+        for (int i = 0; i < 22; i++) {
             System.out.println(y[i]);
         }
         float[] deviationSum = new float[6]; // набор из 6 пар a b, описанных ниже некоторые надо преодразовать в соответствии с уравнениями ниже
@@ -260,8 +257,7 @@ public class Program {
         }
         results.optimalFuncIndex[functionIndex] = functionType;
         //запихиваем все функции в контейнер для резульатов
-        for (int i = 0; i < 6; i++)
-        {
+        for (int i = 0; i < 6; i++) {
             results.functions[functionIndex][i] = new MathFunc(a[i], b[i], i);
         }
 

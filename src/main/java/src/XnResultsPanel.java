@@ -3,7 +3,7 @@ package src;
 import javax.swing.*;
 import java.awt.*;
 
-public class XnResultsPanel extends Panel{
+public class XnResultsPanel extends Panel {
     XnResultsTableModel TableModel;
     JTable dataTable;
 

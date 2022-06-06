@@ -2,8 +2,7 @@ package src;
 
 import javax.swing.table.AbstractTableModel;
 
-class ExperimentDataTableModel extends AbstractTableModel
-{
+class ExperimentDataTableModel extends AbstractTableModel {
 
     final private String[] columnNames = {
             "N",
@@ -16,15 +15,14 @@ class ExperimentDataTableModel extends AbstractTableModel
 
     final Object[][] data;
 
-    ExperimentDataTableModel(int lineNumber)
-    {
+    ExperimentDataTableModel(int lineNumber) {
         super();
 
         data = new Object[lineNumber][6];
 
-        for (int i = 0; i < lineNumber; i++){
+        for (int i = 0; i < lineNumber; i++) {
             data[i][0] = i + 1;
-            for (int j = 1; j < 6; j++){
+            for (int j = 1; j < 6; j++) {
                 data[i][j] = " ";
             }
         }
@@ -52,7 +50,7 @@ class ExperimentDataTableModel extends AbstractTableModel
         return data[row][col].toString();
     }
 
-    public void insertIntoRow(int rowId, Object[] rowData){
+    public void insertIntoRow(int rowId, Object[] rowData) {
         for (int i = 0; i < this.getRowCount(); i++)
             data[i][rowId] = rowData[i];
     }

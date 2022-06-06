@@ -1,4 +1,5 @@
 package src;
+
 public class MathFunc {
     private final float a;
     private final float b;
@@ -23,7 +24,7 @@ public class MathFunc {
     }
 
 
-    public int getType(){
+    public int getType() {
         return type;
     }
 

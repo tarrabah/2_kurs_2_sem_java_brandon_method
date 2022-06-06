@@ -1,7 +1,5 @@
 package src;
 
-import javax.swing.*;
-
 import org.jfree.chart.ChartFactory;
 import org.jfree.chart.ChartPanel;
 import org.jfree.chart.JFreeChart;
@@ -10,8 +8,9 @@ import org.jfree.chart.plot.XYPlot;
 import org.jfree.chart.renderer.xy.XYLineAndShapeRenderer;
 import org.jfree.data.xy.XYSeriesCollection;
 
-class TabWidget extends JTabbedPane
-{
+import javax.swing.*;
+
+class TabWidget extends JTabbedPane {
 
     ChartPanel resultPLot;
     ChartPanel firstParameterPLot;
@@ -35,8 +34,7 @@ class TabWidget extends JTabbedPane
     XYLineAndShapeRenderer resultPlotRenderer;
     XYPlot resultPlotGotPlot;
 
-    TabWidget(int lineNumber)
-    {
+    TabWidget(int lineNumber) {
         super(JTabbedPane.TOP, JTabbedPane.SCROLL_TAB_LAYOUT);
         showDataPanel = new ExperimentalDataPanel(lineNumber);
         //first chart
@@ -78,7 +76,7 @@ class TabWidget extends JTabbedPane
         add("results", resultPLot);
     }
 
-    public void clearCharts(){
+    public void clearCharts() {
         x1Dataset.removeAllSeries();
         x2Dataset.removeAllSeries();
         x3Dataset.removeAllSeries();

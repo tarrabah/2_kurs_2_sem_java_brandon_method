@@ -5,7 +5,7 @@ public class RegressionResFunc {
     private final MathFunc func2;
     private final MathFunc func3;
     private final float yAverage;
-
+    
     public RegressionResFunc(float yAverage, MathFunc func1, MathFunc func2, MathFunc func3) {
         this.yAverage = yAverage;
         this.func1 = func1;
@@ -21,15 +21,15 @@ public class RegressionResFunc {
         return this.yAverage + "*" + func1.toString() + "*\n" + func2.toString() + "*" + func3.toString();
     }
 
-    public MathFunc getFunc1(){
+    public MathFunc getFunc1() {
         return func1;
     }
 
-    public MathFunc getFunc2(){
+    public MathFunc getFunc2() {
         return func2;
     }
 
-    public MathFunc getFunc3(){
+    public MathFunc getFunc3() {
         return func3;
     }
 }

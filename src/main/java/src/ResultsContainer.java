@@ -13,7 +13,7 @@ public class ResultsContainer {
 
     int lineNumber;
 
-    ResultsContainer(int lineNumber){
+    ResultsContainer(int lineNumber) {
         optimalFuncIndex = new int[3];
         functions = new MathFunc[3][6];
         this.lineNumber = lineNumber;

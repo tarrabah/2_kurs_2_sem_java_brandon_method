@@ -21,10 +21,8 @@ public class XnResultsTableModel extends AbstractTableModel {
         super();
         this.lineNumber = lineNumber;
         data = new Object[this.lineNumber][columnNames.length];
-        for (int i = 0; i < this.lineNumber; i++)
-        {
-            for (int j = 0; j < columnNames.length; j++)
-            {
+        for (int i = 0; i < this.lineNumber; i++) {
+            for (int j = 0; j < columnNames.length; j++) {
                 data[i][j] = " ";
             }
         }
@@ -51,8 +49,8 @@ public class XnResultsTableModel extends AbstractTableModel {
         return data[row][col].toString();
     }
 
-    public void insertIntoRow(int rowId, Object[] rowData){
-        for (int i = 0; i < this.getRowCount(); i++){
+    public void insertIntoRow(int rowId, Object[] rowData) {
+        for (int i = 0; i < this.getRowCount(); i++) {
             data[i][rowId] = rowData[i];
         }
     }

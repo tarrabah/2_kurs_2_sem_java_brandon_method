@@ -126,9 +126,11 @@ public class Program {
         for (int i = 0; i < 3; i++) {
             MathFunc result = functionSelection(this.x[this.ryxOrder[i]], this.yNormalized, i); //подбор оптимальной зависимости для x[i]
             this.resultFunctions[i] = result; //сохранение функции-результата
-
+            double yAvg = 0.0;
+            for (int j = 0; j < lineNumber; j++){yAvg += result.calculate(x[this.ryxOrder[i]][j]);}
+            yAvg /= this.lineNumber;
             for (int j = 0; j < lineNumber; j++) {
-                this.yNormalized[j] = this.yNormalized[j] / result.calculate(x[this.ryxOrder[i]][j]); //избавляемся от влияния x[i]
+                this.yNormalized[j] /= (float)yAvg;//this.yNormalized[j] / result.calculate(x[this.ryxOrder[i]][j]); //избавляемся от влияния x[i]
             }
         }
 

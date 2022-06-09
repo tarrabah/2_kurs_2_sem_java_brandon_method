@@ -31,8 +31,8 @@ public class Program {
         fillRyx();
         sortRyx();
         functionBuild();
-        //printResultTable();
-        results.ResultFunction = new RegressionResFunc(yAverage, resultFunctions[0], resultFunctions[1], resultFunctions[2]);
+        printResultTable();
+        results.ResultFunction = new RegressionResFunc(yAverage, resultFunctions[0], resultFunctions[1], resultFunctions[2], ryxOrder);
         return results;
     }
 
@@ -257,6 +257,7 @@ public class Program {
                 mn = deviationSum[i];
             }
         }
+        System.out.println("FunctionType = " + functionType);
         results.optimalFuncIndex[functionIndex] = functionType;
         //запихиваем все функции в контейнер для резульатов
         for (int i = 0; i < 6; i++) {

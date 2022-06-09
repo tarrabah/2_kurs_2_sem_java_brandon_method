@@ -173,8 +173,13 @@ class MainFrame extends Frame implements ActionListener {
     private Object[] generateResults(Float[][] x, RegressionResFunc func) //returns array of function vals
     {
         Object[] result = new Float[lineNumber];
+
+        Float[] line = new Float[3];
         for (int i = 0; i < lineNumber; i++) {
-            result[i] = func.calculate(x[0][i], x[1][i], x[2][i]);
+            line[0] = x[0][i];
+            line[1] = x[1][i];
+            line[2] = x[2][i];
+            result[i] = func.calculate(line);
         }
 
         return result;

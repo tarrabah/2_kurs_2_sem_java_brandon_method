@@ -31,7 +31,7 @@ public class Program {
         fillRyx();
         sortRyx();
         functionBuild();
-        printResultTable();
+        //printResultTable();
         results.ResultFunction = new RegressionResFunc(yAverage, resultFunctions[0], resultFunctions[1], resultFunctions[2], ryxOrder);
         return results;
     }
@@ -143,10 +143,10 @@ public class Program {
         float[] a = new float[6];
         float[] b = new float[6];
         System.arraycopy(y, 0, this.results.yXn[functionIndex], 0, y.length);
-        System.out.println("=====================");
+        /*System.out.println("=====================");
         for (int i = 0; i < 22; i++) {
             System.out.println(y[i]);
-        }
+        }*/
         float[] deviationSum = new float[6]; // набор из 6 пар a b, описанных ниже некоторые надо преодразовать в соответствии с уравнениями ниже
 	    /*
 	    все уравнения приводятся к виду линейному виду: Y = A * X + B
@@ -257,7 +257,7 @@ public class Program {
                 mn = deviationSum[i];
             }
         }
-        System.out.println("FunctionType = " + functionType);
+        //System.out.println("FunctionType = " + functionType);
         results.optimalFuncIndex[functionIndex] = functionType;
         //запихиваем все функции в контейнер для резульатов
         for (int i = 0; i < 6; i++) {
